@@ -26,6 +26,6 @@ void App::DoFrame()
 	const float b = cos(timer.Peek()) / 2.0f + 0.5f;
 	const float c = tan(timer.Peek()) / 2.0f + 0.5f;
 	wnd.GetGraphics().ClearBuffer(a, b, c);
-	wnd.GetGraphics().DrawTestTriangle();
+	wnd.GetGraphics().DrawTestTriangle(timer.Peek());
 	wnd.GetGraphics().EndFrame();
 }
