@@ -107,32 +107,35 @@ void Graphics::DrawTestTriangle()
 		} pos;
 		struct
 		{
-			float r;
-			float g;
-			float b;
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
 		} color;
 	};
 
 	// create vertex buffer (one 2d triangle at center of screen)
 	Vertex vertices[] =
 	{
-		{ 0.0f,  0.5f,  1.0f,  0.0f,  0.0f },
-		{ 0.5f, -0.5f,  0.0f,  1.0f,  0.0f },
-		{-0.5f, -0.5f,  0.0f,  0.0f,  1.0f }
+		{ 0.0f,  0.5f, 255,	0,   0,   0 },
+		{ 0.5f, -0.5f, 0,   255, 0,   0 },
+		{-0.5f, -0.5f, 0,   0,   255, 0 },
 	};
 
-	D3D11_BUFFER_DESC bd = {};
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.CPUAccessFlags = 0u;
-	bd.MiscFlags = 0u;
-	bd.ByteWidth = sizeof(vertices);
-	bd.StructureByteStride = sizeof(Vertex);
+	vertices[0].color.g = 255;
+
+	D3D11_BUFFER_DESC vbd = {};
+	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vbd.Usage = D3D11_USAGE_DEFAULT;
+	vbd.CPUAccessFlags = 0u;
+	vbd.MiscFlags = 0u;
+	vbd.ByteWidth = sizeof(vertices);
+	vbd.StructureByteStride = sizeof(Vertex);
 
 	D3D11_SUBRESOURCE_DATA sd = {};
 	sd.pSysMem = vertices;
 	wrl::ComPtr<ID3D11Buffer> pVertexBuffer;
-	GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer));
+	GFX_THROW_INFO(pDevice->CreateBuffer(&vbd, &sd, &pVertexBuffer));
 
 	// bind vertex buffer to pipeline
 	const UINT stride = sizeof(Vertex);
@@ -153,7 +156,7 @@ void Graphics::DrawTestTriangle()
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
 		{"Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"Color",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{"Color",    0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 
 	GFX_THROW_INFO(pDevice->CreateInputLayout(
