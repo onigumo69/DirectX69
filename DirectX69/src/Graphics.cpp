@@ -71,6 +71,44 @@ Graphics::Graphics(HWND hWnd)
 	wrl::ComPtr<ID3D11Resource> pBackBuffer;
 	GFX_THROW_INFO(pSwap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer));
 	GFX_THROW_INFO(pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget));
+
+	// create depth stencil state
+	D3D11_DEPTH_STENCIL_DESC dsd = {};
+	dsd.DepthEnable = TRUE;
+	dsd.DepthFunc = D3D11_COMPARISON_LESS;
+	dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	wrl::ComPtr<ID3D11DepthStencilState> pState;
+	GFX_THROW_INFO(pDevice->CreateDepthStencilState(&dsd, &pState));
+
+	// bind depth state
+	pContext->OMSetDepthStencilState(pState.Get(), 1u);
+
+	// create depth stencil texture
+	wrl::ComPtr<ID3D11Texture2D> pTexture;
+
+	D3D11_TEXTURE2D_DESC td = {};
+	td.Width = 800u;
+	td.Height = 600u;
+	td.MipLevels = 1u;
+	td.ArraySize = 1u;
+	td.Format = DXGI_FORMAT_D32_FLOAT;
+	td.SampleDesc.Count = 1u;
+	td.SampleDesc.Quality = 0u;
+	td.Usage = D3D11_USAGE_DEFAULT;
+	td.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	GFX_THROW_INFO(pDevice->CreateTexture2D(&td, nullptr, &pTexture));
+
+	// create view of depth stencil texture
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd = {};
+	dsvd.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsvd.Texture2D.MipSlice = 0u;
+	GFX_THROW_INFO(pDevice->CreateDepthStencilView(
+		pTexture.Get(), &dsvd, &pDepth
+	));
+
+	// bind depth stencil view to OM
+	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDepth.Get());
 }
 
 void Graphics::EndFrame()
@@ -93,9 +131,10 @@ void Graphics::ClearBuffer(float red, float green, float blue) noexcept
 {
 	const float color[] = { red, green, blue };
 	pContext->ClearRenderTargetView(pTarget.Get(), color);
+	pContext->ClearDepthStencilView(pDepth.Get(), D3D11_CLEAR_DEPTH, 1.0f, 9u);
 }
 
-void Graphics::DrawTestTriangle(float angle, float x, float y)
+void Graphics::DrawTestTriangle(float angle, float x, float z)
 {
 	namespace wrl = Microsoft::WRL;
 	HRESULT hr;
@@ -179,7 +218,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 		dx::XMMatrixTranspose(
 			dx::XMMatrixRotationZ(angle) *
 			dx::XMMatrixRotationX(angle) *
-			dx::XMMatrixTranslation(x, y, 4.0f) *
+			dx::XMMatrixTranslation(x, 0.0f, z + 4.0f) *
 			dx::XMMatrixPerspectiveLH(1.0f, ratio, 0.5f, 10.0f)
 		)
 	};
@@ -273,9 +312,6 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 
 	// bind pixel shader
 	pContext->PSSetShader(pPixelShader.Get(), nullptr, 0u);
-
-	// bind render target
-	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), nullptr);
 
 	// set primitive topology to triangle list
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
