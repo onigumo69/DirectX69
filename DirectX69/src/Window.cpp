@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Macros/WindowsThrowMacros.h"
 
 Window::WindowClass Window::WindowClass::wndClass;
 

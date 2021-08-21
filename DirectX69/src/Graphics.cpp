@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "DXError.h"
+#include "Macros/GraphicsThrowMacros.h"
 #include <sstream>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
@@ -9,22 +10,6 @@ namespace dx = DirectX;
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
-
-// graphics exception checking/throwing macros (some with dxgi infos)
-#define GFX_EXCEPT_NOINFO(hr) Graphics::HrException(__FILE__, __LINE__, (hr))
-#define GFX_THROW_NOINFO(hrcall) if(FAILED(hr = (hrcall))) throw Graphics::HrException(__FILE__, __LINE__, hr)
-
-#ifndef NDEBUG
-#define GFX_EXCEPT(hr) Graphics::HrException(__FILE__, __LINE__, (hr), infoManager.GetMessages())
-#define GFX_THROW_INFO(hrcall) infoManager.Set(); if(FAILED(hr = (hrcall))) throw GFX_EXCEPT(hr)
-#define GFX_THROW_INFO_ONLY(call) infoManager.Set(); (call); {auto v = infoManager.GetMessages(); if(!v.empty()) {throw Graphics::InfoException(__FILE__, __LINE__, v);}}
-#define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::DeviceRemovedException(__FILE__, __LINE__, (hr), infoManager.GetMessages())
-#else
-#define GFX_EXCEPT(hr) Graphics::HrException(__FILE__, __LINE__, (hr))
-#define GFX_THROW_INFO(hrcall) GFX_THROW_NOINFO(hrcall)
-#define GFX_THROW_INFO_ONLY(call) (call)
-#define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::DeviceRemovedException(__FILE__, __LINE__, (hr))
-#endif
 
 Graphics::Graphics(HWND hWnd)
 {

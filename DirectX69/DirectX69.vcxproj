@@ -192,6 +192,8 @@
     <ClInclude Include="include\DXGIInfoManager.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\Keyboard.h" />
+    <ClInclude Include="include\Macros\GraphicsThrowMacros.h" />
+    <ClInclude Include="include\Macros\WindowsThrowMacros.h" />
     <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Window.h" />
