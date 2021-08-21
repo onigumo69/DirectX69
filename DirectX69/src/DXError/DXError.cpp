@@ -1,4 +1,4 @@
-#include "DXError.h"
+#include "DXError/DXError.h"
 
 #include <stdio.h>
 #include <algorithm>
@@ -89,7 +89,7 @@ const WCHAR* WINAPI DXGetErrorStringW(_In_ HRESULT hr)
 #define CHK_ERR_WIN32A CHK_ERR_WIN32A_W
 #define CHK_ERR_WIN32_ONLY CHK_ERR_WIN32_ONLY_W
 #define DX_STR_WRAP(...) L##__VA_ARGS__
-#include "DXGetErrorString.inl"
+#include "DXError/DXGetErrorString.inl"
 #undef DX_STR_WRAP
 #undef CHK_ERR_WIN32A
 #undef CHK_ERR_WIN32_ONLY
@@ -104,7 +104,7 @@ const CHAR* WINAPI DXGetErrorStringA(_In_ HRESULT hr)
 #define CHK_ERR_WIN32A CHK_ERR_WIN32A_A
 #define CHK_ERR_WIN32_ONLY CHK_ERR_WIN32_ONLY_A
 #define DX_STR_WRAP(s) s
-#include "DXGetErrorString.inl"
+#include "DXError/DXGetErrorString.inl"
 #undef DX_STR_WRAP
 #undef CHK_ERR_WIN32A
 #undef CHK_ERR_WIN32_ONLY
@@ -147,7 +147,7 @@ void WINAPI DXGetErrorDescriptionW(_In_ HRESULT hr, _Out_cap_(count) WCHAR* desc
 #define CHK_ERRA CHK_ERRA_W
 #define CHK_ERR CHK_ERR_W
 #define DX_FORMATMESSAGE FormatMessageW
-#include "DXGetErrorDescription.inl"
+#include "DXError/DXGetErrorDescription.inl"
 #undef DX_FORMATMESSAGE
 #undef CHK_ERRA
 #undef CHK_ERR
@@ -158,7 +158,7 @@ void WINAPI DXGetErrorDescriptionA(_In_ HRESULT hr, _Out_cap_(count) CHAR* desc,
 #define CHK_ERRA CHK_ERRA_A
 #define CHK_ERR CHK_ERR_A
 #define DX_FORMATMESSAGE FormatMessageA
-#include "DXGetErrorDescription.inl"
+#include "DXError/DXGetErrorDescription.inl"
 #undef DX_FORMATMESSAGE
 #undef CHK_ERRA
 #undef CHK_ERR
@@ -177,7 +177,7 @@ HRESULT WINAPI DXTraceW(_In_z_ const WCHAR* strFile, _In_ DWORD dwLine, _In_ HRE
 #define DX_MESSAGEBOX MessageBoxW
 #define DX_OUTPUTDEBUGSTRING OutputDebugStringW
 #define DX_GETERRORSTRING DXGetErrorStringW
-#include "DXTrace.inl"
+#include "DXError/DXTrace.inl"
 #undef DX_STR_WRAP
 #undef DX_CHAR
 #undef DX_SPRINTF_S
@@ -201,7 +201,7 @@ HRESULT WINAPI DXTraceA(_In_z_ const CHAR* strFile, _In_ DWORD dwLine, _In_ HRES
 #define DX_MESSAGEBOX MessageBoxA
 #define DX_OUTPUTDEBUGSTRING OutputDebugStringA
 #define DX_GETERRORSTRING DXGetErrorStringA
-#include "DXTrace.inl"
+#include "DXError/DXTrace.inl"
 #undef DX_STR_WRAP
 #undef DX_CHAR
 #undef DX_SPRINTF_S

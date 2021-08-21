@@ -5,9 +5,14 @@
 #include <wrl.h>
 #include <vector>
 #include "DXGIInfoManager.h"
+#include <d3dcompiler.h>
+#include <DirectXMath.h>
+#include <memory>
+#include <random>
 
 class Graphics
 {
+	friend class Bindable;
 public:
 	Graphics(HWND hWnd);
 	Graphics(const Graphics&) = delete;
@@ -15,9 +20,13 @@ public:
 	~Graphics() = default;
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue) noexcept;
-	void DrawTestTriangle(float angle, float x, float z);
+	void DrawIndexed(UINT count) noexcept(!IS_DEBUG);
+	void SetProjection(DirectX::FXMMATRIX proj) noexcept;
+	DirectX::XMMATRIX GetProjection() const noexcept;
 
 private:
+	DirectX::XMMATRIX projection;
+
 #ifndef NDEBUG
 	DXGIInfoManager infoManager;
 #endif
