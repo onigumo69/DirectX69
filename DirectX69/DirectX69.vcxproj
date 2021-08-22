@@ -210,6 +210,7 @@
     <ClInclude Include="include\CleanException.h" />
     <ClInclude Include="include\Drawable\Box.h" />
     <ClInclude Include="include\Drawable\Drawable.h" />
+    <ClInclude Include="include\Drawable\DrawableBase.h" />
     <ClInclude Include="include\DXError\DXError.h" />
     <ClInclude Include="include\DXGIInfoManager.h" />
     <ClInclude Include="include\Graphics.h" />
