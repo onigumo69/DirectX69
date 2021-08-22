@@ -10,7 +10,7 @@ ID3D11DeviceContext* Bindable::GetContext(Graphics& gfx) noexcept
 	return gfx.pContext.Get();
 }
 
-DXGIInfoManager& Bindable::GetInfoManager(Graphics& gfx) noexcept(!IS_DEBUG)
+DXGIInfoManager& Bindable::GetInfoManager(Graphics& gfx) noexcept(IS_DEBUG)
 {
 #ifndef NDEBUG
 	return gfx.infoManager;
