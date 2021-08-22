@@ -188,6 +188,7 @@
     <ClCompile Include="src\Drawable\Melon.cpp" />
     <ClCompile Include="src\Drawable\Pyramid.cpp" />
     <ClCompile Include="src\Drawable\Sheet.cpp" />
+    <ClCompile Include="src\Drawable\SkinnedBox.cpp" />
     <ClCompile Include="src\DXError\DXError.cpp" />
     <ClCompile Include="src\DXGIInfoManager.cpp" />
     <ClCompile Include="src\GDIPlusManager.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="include\Drawable\Melon.h" />
     <ClInclude Include="include\Drawable\Pyramid.h" />
     <ClInclude Include="include\Drawable\Sheet.h" />
+    <ClInclude Include="include\Drawable\SkinnedBox.h" />
     <ClInclude Include="include\DXError\DXError.h" />
     <ClInclude Include="include\DXGIInfoManager.h" />
     <ClInclude Include="include\GDIPlusManager.h" />

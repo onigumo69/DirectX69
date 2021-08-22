@@ -99,6 +99,9 @@
     <ClCompile Include="src\Bindable\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Drawable\SkinnedBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CleanWindows.h">
@@ -219,6 +222,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Bindable\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Drawable\SkinnedBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
