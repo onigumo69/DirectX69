@@ -213,10 +213,17 @@
     <ClInclude Include="include\Drawable\DrawableBase.h" />
     <ClInclude Include="include\DXError\DXError.h" />
     <ClInclude Include="include\DXGIInfoManager.h" />
+    <ClInclude Include="include\Geometry\Cone.h" />
+    <ClInclude Include="include\Geometry\Cube.h" />
+    <ClInclude Include="include\Geometry\IndexedTriangleList.h" />
+    <ClInclude Include="include\Geometry\Plane.h" />
+    <ClInclude Include="include\Geometry\Prism.h" />
+    <ClInclude Include="include\Geometry\Sphere.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\Macros\GraphicsThrowMacros.h" />
     <ClInclude Include="include\Macros\WindowsThrowMacros.h" />
+    <ClInclude Include="include\CleanMath.h" />
     <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Window.h" />
