@@ -3,7 +3,7 @@
 #include <CleanMath.h>
 #include <DirectXMath.h>
 
-class Clone
+class Cone
 {
 public:
 	template<class V>
@@ -52,7 +52,7 @@ public:
 		{
 			indices.push_back(iLong);
 			indices.push_back((iLong + 1) % longDiv);
-			indices.push_back(iTip);
+			indices.push_back(tip);
 		}
 
 		return { std::move(vertices), std::move(indices) };

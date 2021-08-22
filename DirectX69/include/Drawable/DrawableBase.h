@@ -24,7 +24,7 @@ protected:
 		staticBinds.push_back(std::move(ibuf));
 	}
 
-	void SetIndexFormatStatic() noexcept(!IS_DEBUG)
+	void SetIndexFromStatic() noexcept(!IS_DEBUG)
 	{
 		assert("Attempting to add index buffer a second time" && pIndexBuffer == nullptr);
 		for (const auto& b : staticBinds)
