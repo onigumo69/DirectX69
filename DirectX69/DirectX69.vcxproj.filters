@@ -84,6 +84,21 @@
     <ClCompile Include="src\Drawable\Pyramid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GDIPlusManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Surface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Drawable\Sheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bindable\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CleanWindows.h">
@@ -191,6 +206,21 @@
     <ClInclude Include="include\Drawable\Pyramid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GDIPlusManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bindable\Sampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Drawable\Sheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bindable\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\DXError\DXGetErrorString.inl">
@@ -208,5 +238,7 @@
     <FxCompile Include="shader\ColorIndexPS.hlsl" />
     <FxCompile Include="shader\ColorBlendVS.hlsl" />
     <FxCompile Include="shader\ColorBlendPS.hlsl" />
+    <FxCompile Include="shader\TextureVS.hlsl" />
+    <FxCompile Include="shader\TexturePS.hlsl" />
   </ItemGroup>
 </Project>

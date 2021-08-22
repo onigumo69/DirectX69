@@ -2,10 +2,15 @@
 #include "Drawable/Box.h"
 #include "Drawable/Melon.h"
 #include "Drawable/Pyramid.h"
+#include "Drawable/Sheet.h"
+#include "Surface.h"
+#include "GDIPlusManager.h"
+#include "CleanMath.h"
 #include <memory>
 #include <iomanip>
 #include <algorithm>
-#include "CleanMath.h"
+
+GDIPlusManager gdipm;
 
 App::App()
 	:
@@ -37,6 +42,11 @@ App::App()
 					gfx, rng, adist, ddist,
 					odist, rdist, longdist, latdist
 					);
+			case 3:
+				return std::make_unique<Sheet>(
+					gfx, rng, adist, ddist,
+					odist, rdist
+					);
 			default:
 				assert(false && "bad drawable type in factory");
 				return {};
@@ -52,7 +62,7 @@ App::App()
 		std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 		std::uniform_int_distribution<int> latdist{ 5,20 };
 		std::uniform_int_distribution<int> longdist{ 10,40 };
-		std::uniform_int_distribution<int> typedist{ 0,2 };
+		std::uniform_int_distribution<int> typedist{ 0,3 }	;
 	};
 
 	Factory f(wnd.GetGraphics());
