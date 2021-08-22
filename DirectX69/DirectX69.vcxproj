@@ -172,6 +172,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\ImGui\imgui.cpp" />
+    <ClCompile Include="include\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="include\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="include\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="include\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Bindable\Bindable.cpp" />
     <ClCompile Include="src\Bindable\IndexBuffer.cpp" />
@@ -193,6 +199,7 @@
     <ClCompile Include="src\DXGIInfoManager.cpp" />
     <ClCompile Include="src\GDIPlusManager.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\ImGuiManager.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Sampler.cpp" />
@@ -235,6 +242,15 @@
     <ClInclude Include="include\Geometry\Prism.h" />
     <ClInclude Include="include\Geometry\Sphere.h" />
     <ClInclude Include="include\Graphics.h" />
+    <ClInclude Include="include\ImGuiManager.h" />
+    <ClInclude Include="include\ImGui\imconfig.h" />
+    <ClInclude Include="include\ImGui\imgui.h" />
+    <ClInclude Include="include\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="include\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="include\ImGui\imgui_internal.h" />
+    <ClInclude Include="include\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="include\ImGui\imstb_textedit.h" />
+    <ClInclude Include="include\ImGui\imstb_truetype.h" />
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\Macros\GraphicsThrowMacros.h" />
     <ClInclude Include="include\Macros\WindowsThrowMacros.h" />

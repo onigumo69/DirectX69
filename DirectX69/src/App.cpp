@@ -7,6 +7,7 @@
 #include "Surface.h"
 #include "GDIPlusManager.h"
 #include "CleanMath.h"
+#include "ImGui/imgui.h"
 #include <memory>
 #include <iomanip>
 #include <algorithm>
@@ -98,12 +99,25 @@ int App::Go()
 
 void App::DoFrame()
 {
-	auto dt = timer.Mark();
-	wnd.GetGraphics().ClearBuffer(0.07f, 0.0f, 0.12f);
+	const auto dt = timer.Mark() * speedFactor;
+	wnd.GetGraphics().BeginFrame(0.07f, 0.0f, 0.12f);
+
 	for (auto& d : drawables)
 	{
 		d->Update(wnd.kbd.KeyIsPressed(VK_SPACE) ? 0.0f : dt);
 		d->Draw(wnd.GetGraphics());
 	}
+
+	// imgui window to control simulation speed
+	if (ImGui::Begin("Simulation Speed"))
+	{
+		ImGui::SliderFloat("Speed Factor", &speedFactor, 0.0f, 4.0f);
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("Status: %s", wnd.kbd.KeyIsPressed(VK_SPACE) ? "PAUSED" : "RUNNING");
+	}
+
+	ImGui::End();
+
+	// present
 	wnd.GetGraphics().EndFrame();
 }
