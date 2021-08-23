@@ -188,6 +188,7 @@
     <ClCompile Include="src\Bindable\TransformCBuffer.cpp" />
     <ClCompile Include="src\Bindable\VertexBuffer.cpp" />
     <ClCompile Include="src\Bindable\VertexShader.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CleanException.cpp" />
     <ClCompile Include="src\Drawable\Box.cpp" />
     <ClCompile Include="src\Drawable\Drawable.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="include\Bindable\TransformCBuffer.h" />
     <ClInclude Include="include\Bindable\VertexBuffer.h" />
     <ClInclude Include="include\Bindable\VertexShader.h" />
+    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CleanWindows.h" />
     <ClInclude Include="include\CleanException.h" />
     <ClInclude Include="include\Drawable\Box.h" />

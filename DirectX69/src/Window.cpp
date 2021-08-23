@@ -144,7 +144,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	{
 		return true;
 	}
-	const auto imguiIO = ImGui::GetIO();
+	const auto& imguiIO = ImGui::GetIO();
 
 	switch (msg)
 	{
