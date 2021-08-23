@@ -3,10 +3,14 @@
 #include "Drawable/Cylinder.h"
 #include "Drawable/Pyramid.h"
 #include "Drawable/SkinnedBox.h"
+#include "Drawable/AssTest.h"
 #include "Surface.h"
 #include "GDIPlusManager.h"
 #include "CleanMath.h"
 #include "ImGui/imgui.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include <memory>
 #include <iomanip>
 #include <algorithm>
@@ -52,6 +56,11 @@ App::App()
 					gfx, rng, adist, ddist,
 					odist, rdist
 					);
+			case 4:
+				return std::make_unique<AssTest>(
+					gfx, rng, adist, ddist,
+					odist, rdist, mat, 1.5f
+					);
 			default:
 				assert(false && "impossible drawable option in factory");
 				return {};
@@ -60,7 +69,7 @@ App::App()
 	private:
 		Graphics& gfx;
 		std::mt19937 rng{ std::random_device{}() };
-		std::uniform_int_distribution<int> sdist{ 0,3	 };
+		std::uniform_int_distribution<int> sdist{ 0,4 };
 		std::uniform_real_distribution<float> adist{ 0.0f,PI * 2.0f };
 		std::uniform_real_distribution<float> ddist{ 0.0f,PI * 0.5f };
 		std::uniform_real_distribution<float> odist{ 0.0f,PI * 0.08f };
@@ -142,6 +151,7 @@ void App::SpawnSimulationWindow() noexcept
 
 	ImGui::End();
 }
+
 void App::SpawnBoxWindowManagerWindow() noexcept
 {
 	if (ImGui::Begin("Boxes"))
@@ -152,7 +162,6 @@ void App::SpawnBoxWindowManagerWindow() noexcept
 		{
 			for (int i = 0; i < boxes.size(); i++)
 			{
-				//const bool selected = *comboBoxIndex == i;
 				const bool selected = comboBoxIndex == i;
 				if (ImGui::Selectable(std::to_string(i).c_str(), selected))
 				{
@@ -173,7 +182,7 @@ void App::SpawnBoxWindowManagerWindow() noexcept
 	}
 
 	ImGui::End();
-}	
+}
 
 void App::SpawnBoxWindows() noexcept
 {
