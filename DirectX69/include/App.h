@@ -24,5 +24,6 @@ private:
 	PointLight light;
 	float speedFactor = 1.0f;
 	std::vector<std::unique_ptr<class Drawable>> drawables;
+	std::vector<class Box*> boxes;
 	static constexpr size_t nDrawables = 180;
 };
