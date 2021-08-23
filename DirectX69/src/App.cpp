@@ -60,7 +60,7 @@ App::App()
 	private:
 		Graphics& gfx;
 		std::mt19937 rng{ std::random_device{}() };
-		std::uniform_int_distribution<int> sdist{ 0,3 };
+		std::uniform_int_distribution<int> sdist{ 0,3	 };
 		std::uniform_real_distribution<float> adist{ 0.0f,PI * 2.0f };
 		std::uniform_real_distribution<float> ddist{ 0.0f,PI * 0.5f };
 		std::uniform_real_distribution<float> odist{ 0.0f,PI * 0.08f };
@@ -111,6 +111,7 @@ void App::DoFrame()
 	wnd.GetGraphics().SetCamera(camera.GetMatrix());
 	light.Bind(wnd.GetGraphics(), camera.GetMatrix());
 
+	// render geometry	
 	for (auto& d : drawables)
 	{
 		d->Update(wnd.kbd.KeyIsPressed(VK_SPACE) ? 0.0f : dt);
@@ -119,7 +120,19 @@ void App::DoFrame()
 
 	light.Draw(wnd.GetGraphics());
 
-	// imgui window to control simulation speed
+	// imgui windows
+	SpawnSimulationWindow();
+	camera.SpawnControlWindow();
+	light.SpawnControlWindow();
+	SpawnBoxWindowManagerWindow();
+	SpawnBoxWindows();
+
+	// present
+	wnd.GetGraphics().EndFrame();
+}
+
+void App::SpawnSimulationWindow() noexcept
+{
 	if (ImGui::Begin("Simulation Speed"))
 	{
 		ImGui::SliderFloat("Speed Factor", &speedFactor, 0.0f, 6.0f, "%.4f", 3.2f);
@@ -128,13 +141,51 @@ void App::DoFrame()
 	}
 
 	ImGui::End();
-	// imgui window to control camera and light
-	camera.SpawnControlWindow();
-	light.SpawnControlWindow();
+}
+void App::SpawnBoxWindowManagerWindow() noexcept
+{
+	if (ImGui::Begin("Boxes"))
+	{
+		using namespace std::string_literals;
+		const auto preview = comboBoxIndex ? std::to_string(*comboBoxIndex) : "Choose a box..."s;
+		if (ImGui::BeginCombo("Box Number", preview.c_str()))
+		{
+			for (int i = 0; i < boxes.size(); i++)
+			{
+				//const bool selected = *comboBoxIndex == i;
+				const bool selected = comboBoxIndex == i;
+				if (ImGui::Selectable(std::to_string(i).c_str(), selected))
+				{
+					comboBoxIndex = i;
+				}
+				if (selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+			ImGui::EndCombo();
+		}
+		if (ImGui::Button("Spawn Control Window") && comboBoxIndex)
+		{
+			boxControlIds.insert(*comboBoxIndex);
+			comboBoxIndex.reset();
+		}
+	}
 
-	// imgui window to adjust box instance parameters
-	boxes.front()->SpawnControlWindow(69, wnd.GetGraphics());
+	ImGui::End();
+}	
 
-	// present
-	wnd.GetGraphics().EndFrame();
+void App::SpawnBoxWindows() noexcept
+{
+	for (auto i = boxControlIds.begin(); i != boxControlIds.end(); )
+	{
+		if (!boxes[*i]->SpawnControlWindow(*i, wnd.GetGraphics()))
+		{
+			i = boxControlIds.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+	}
 }

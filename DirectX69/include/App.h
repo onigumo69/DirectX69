@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "Camera.h"
 #include "PointLight.h"
+#include <set>
 
 class App
 {
@@ -15,6 +16,9 @@ public:
 
 private:
 	void DoFrame();
+	void SpawnSimulationWindow() noexcept;
+	void SpawnBoxWindowManagerWindow() noexcept;
+	void SpawnBoxWindows() noexcept;
 
 private:
 	ImGuiManager imgui;
@@ -26,4 +30,6 @@ private:
 	std::vector<std::unique_ptr<class Drawable>> drawables;
 	std::vector<class Box*> boxes;
 	static constexpr size_t nDrawables = 180;
+	std::optional<int> comboBoxIndex;
+	std::set<int> boxControlIds;
 };
