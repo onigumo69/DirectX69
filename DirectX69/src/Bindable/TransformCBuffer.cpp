@@ -1,26 +1,29 @@
 #include "Bindable/TransformCBuffer.h"
 
-TransformCBuffer::TransformCBuffer(Graphics& gfx, const Drawable& parent)
+TransformCBuffer::TransformCBuffer(Graphics& gfx, const Drawable& parent, UINT slot)
 	:
 	parent{ parent }
 {
 	if (!pVCBuffer)
 	{
-		pVCBuffer = std::make_unique<VertexConstantBuffer<DirectX::XMMATRIX>>(gfx);
+		pVCBuffer = std::make_unique<VertexConstantBuffer<Transform>>(gfx, slot);
 	}
 }
 
 void TransformCBuffer::Bind(Graphics& gfx) noexcept
 {
-	pVCBuffer->Update(
-		gfx,
+	const auto model = parent.GetTransformXM();
+	const Transform tf =
+	{
+		DirectX::XMMatrixTranspose(model),
 		DirectX::XMMatrixTranspose(
-			parent.GetTransformXM()
-			* gfx.GetCamera()
-			* gfx.GetProjection()
-	));
+			model *
+			gfx.GetCamera() *
+			gfx.GetProjection())
+	};
 
+	pVCBuffer->Update(gfx, tf);
 	pVCBuffer->Bind(gfx);
 }
 
-std::unique_ptr<VertexConstantBuffer<DirectX::XMMATRIX>> TransformCBuffer::pVCBuffer;
+std::unique_ptr<VertexConstantBuffer<TransformCBuffer::Transform>> TransformCBuffer::pVCBuffer;

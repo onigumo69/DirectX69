@@ -5,12 +5,19 @@
 
 class TransformCBuffer : public Bindable
 {
+private:
+	struct Transform
+	{
+		DirectX::XMMATRIX modelViewProj;
+		DirectX::XMMATRIX model;
+	};
+
 public:
-	TransformCBuffer(Graphics& gfx, const Drawable& parent);
+	TransformCBuffer(Graphics& gfx, const Drawable& parent, UINT slot = 0u);
 
 	void Bind(Graphics& gfx) noexcept override;
 
 private:
-	static std::unique_ptr<VertexConstantBuffer<DirectX::XMMATRIX>> pVCBuffer;
+	static std::unique_ptr<VertexConstantBuffer<Transform>> pVCBuffer;
 	const Drawable& parent;
 };

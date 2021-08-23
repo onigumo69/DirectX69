@@ -1,9 +1,5 @@
 #include "App.h"
 #include "Drawable/Box.h"
-#include "Drawable/Melon.h"
-#include "Drawable/Pyramid.h"
-#include "Drawable/Sheet.h"
-#include "Drawable/SkinnedBox.h"
 #include "Surface.h"
 #include "GDIPlusManager.h"
 #include "CleanMath.h"
@@ -18,7 +14,8 @@ GDIPlusManager gdipm;
 
 App::App()
 	:
-	wnd(800, 600, "DirectX 69")
+	wnd{ 800, 600, "DirectX 69" },
+	light{ wnd.GetGraphics() }
 {
 	class Factory
 	{
@@ -29,37 +26,11 @@ App::App()
 		{}
 		std::unique_ptr<Drawable> operator()()
 		{
-			switch (typedist(rng))
-			{
-			case 0:
-				return std::make_unique<Pyramid>(
-					gfx, rng, adist, ddist,
-					odist, rdist
-					);
-			case 1:
-				return std::make_unique<Box>(
-					gfx, rng, adist, ddist,
-					odist, rdist, bdist
-					);
-			case 2:
-				return std::make_unique<Melon>(
-					gfx, rng, adist, ddist,
-					odist, rdist, longdist, latdist
-					);
-			case 3:
-				return std::make_unique<Sheet>(
-					gfx, rng, adist, ddist,
-					odist, rdist
-					);
-			case 4:
-				return std::make_unique<SkinnedBox>(
-					gfx, rng, adist, ddist,
-					odist, rdist
-					);
-			default:
-				assert(false && "bad drawable type in factory");
-				return {};
-			}
+			const DirectX::XMFLOAT3 mat = { cdist(rng), cdist(rng), cdist(rng) };
+			return std::make_unique<Box>(
+				gfx, rng, adist, ddist,
+				odist, rdist, bdist, mat
+				);
 		}
 	private:
 		Graphics& gfx;
@@ -69,9 +40,7 @@ App::App()
 		std::uniform_real_distribution<float> odist{ 0.0f,PI * 0.08f };
 		std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
 		std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
-		std::uniform_int_distribution<int> latdist{ 5,20 };
-		std::uniform_int_distribution<int> longdist{ 10,40 };
-		std::uniform_int_distribution<int> typedist{ 0,4 }	;
+		std::uniform_real_distribution<float> cdist{ 0.0f,1.0f };
 	};
 
 	drawables.reserve(nDrawables);
@@ -104,12 +73,15 @@ void App::DoFrame()
 	const auto dt = timer.Mark() * speedFactor;
 	wnd.GetGraphics().BeginFrame(0.07f, 0.0f, 0.12f);
 	wnd.GetGraphics().SetCamera(camera.GetMatrix());
+	light.Bind(wnd.GetGraphics());
 
 	for (auto& d : drawables)
 	{
 		d->Update(wnd.kbd.KeyIsPressed(VK_SPACE) ? 0.0f : dt);
 		d->Draw(wnd.GetGraphics());
 	}
+
+	light.Draw(wnd.GetGraphics());
 
 	// imgui window to control simulation speed
 	if (ImGui::Begin("Simulation Speed"))
@@ -120,8 +92,9 @@ void App::DoFrame()
 	}
 
 	ImGui::End();
-	// imgui window to control camera
+	// imgui window to control camera and light
 	camera.SpawnControlWindow();
+	light.SpawnControlWindow();
 
 	// present
 	wnd.GetGraphics().EndFrame();

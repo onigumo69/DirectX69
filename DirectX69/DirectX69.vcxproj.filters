@@ -78,9 +78,6 @@
     <ClCompile Include="src\Bindable\TransformCBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Drawable\Melon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Drawable\Pyramid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,6 +121,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Drawable\SolidSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,9 +230,6 @@
     <ClInclude Include="include\Geometry\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Drawable\Melon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Drawable\Pyramid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -281,6 +281,12 @@
     <ClInclude Include="include\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Drawable\SolidSphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\DXError\DXGetErrorString.inl">
@@ -294,11 +300,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\ColorIndexVS.hlsl" />
-    <FxCompile Include="shader\ColorIndexPS.hlsl" />
     <FxCompile Include="shader\ColorBlendVS.hlsl" />
     <FxCompile Include="shader\ColorBlendPS.hlsl" />
     <FxCompile Include="shader\TextureVS.hlsl" />
     <FxCompile Include="shader\TexturePS.hlsl" />
+    <FxCompile Include="shader\PhongVS.hlsl" />
+    <FxCompile Include="shader\PhongPS.hlsl" />
+    <FxCompile Include="shader\SolidVS.hlsl" />
+    <FxCompile Include="shader\SolidPS.hlsl" />
   </ItemGroup>
 </Project>
