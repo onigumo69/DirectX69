@@ -18,15 +18,14 @@ public:
 private:
 	void DoFrame();
 	void ShowImGuiDemoWindow();
-	void ShowRawInputWindow();
 
 private:
-	int x = 0, y = 0;
+	bool showDemoWindow = false;
 	ImGuiManager imgui;
 	Window wnd;
 	Timer timer;
 	Camera camera;
 	PointLight light;
 	float speedFactor = 1.0f;
-	Model nano{ wnd.GetGraphics(), "Models\\nano.gltf" };
+	Model nano{ wnd.GetGraphics(), "Models\\nano_hierarchy.gltf" };
 };
