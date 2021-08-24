@@ -80,6 +80,22 @@ Window::~Window()
 	DestroyWindow(hWnd);
 }
 
+void Window::EnableCursor() noexcept
+{
+	cursorEnabled = true;
+	ShowCursor();
+	EnableImGuiMouse();
+	FreeCursor();
+}
+
+void Window::DisableCursor() noexcept
+{
+	cursorEnabled = false;
+	HideCursor();
+	DisableImGuiMouse();
+	ConfineCursor();
+}
+
 std::optional<int> Window::ProcessMessages() noexcept
 {
 	MSG msg;
@@ -109,6 +125,39 @@ Graphics& Window::GetGraphics() const
 		throw WND_NOGFX_EXCEPT();
 	}
 	return *pGfx;
+}
+
+void Window::ConfineCursor() noexcept
+{
+	RECT rect;
+	GetClientRect(hWnd, &rect);
+	MapWindowPoints(hWnd, nullptr, reinterpret_cast<POINT*>(&rect), 2);
+	ClipCursor(&rect);
+}
+
+void Window::FreeCursor() noexcept
+{
+	ClipCursor(nullptr);
+}
+
+void Window::ShowCursor() noexcept
+{
+	while (::ShowCursor(TRUE) < 0);
+}
+
+void Window::HideCursor() noexcept
+{
+	while (::ShowCursor(FALSE) >= 0);
+}
+
+void Window::EnableImGuiMouse() noexcept
+{
+	ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+}
+
+void Window::DisableImGuiMouse() noexcept
+{
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
 }
 
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
@@ -160,6 +209,23 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		kbd.ClearState();
 		break;
 
+	case WM_ACTIVATE:
+		// confine/free cursor on window to foreground/background if cursor disabled
+		if (!cursorEnabled)
+		{
+			if (wParam & WA_ACTIVE)
+			{
+				ConfineCursor();
+				HideCursor();
+			}
+			else
+			{
+				FreeCursor();
+				ShowCursor();
+			}
+		}
+		break;
+
 		/*********** KEYBOARD MESSAGES ***********/
 	case WM_KEYDOWN:
 		if (!(lParam & 0x40000000) || kbd.AutorepeatIsEnabled()) // filter autorepeat
@@ -205,6 +271,17 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		/************* MOUSE MESSAGES ****************/
 	case WM_MOUSEMOVE:
 	{
+		// cursorless exclusive gets first dibs
+		if (!cursorEnabled)
+		{
+			if (!mouse.IsInWindow())
+			{
+				SetCapture(hWnd);
+				mouse.OnMouseEnter();
+				HideCursor();
+			}
+			break;
+		}
 		if (imguiIO.WantCaptureMouse)
 		{
 			break;
@@ -240,6 +317,11 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_LBUTTONDOWN:
 	{
 		SetForegroundWindow(hWnd);
+		if (!cursorEnabled)
+		{
+			ConfineCursor();
+			HideCursor();
+		}
 		if (imguiIO.WantCaptureMouse)
 		{
 			break;
