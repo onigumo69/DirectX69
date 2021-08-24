@@ -313,6 +313,7 @@
     <ClInclude Include="include\PointLight.h" />
     <ClInclude Include="include\Surface.h" />
     <ClInclude Include="include\Timer.h" />
+    <ClInclude Include="include\Vertex.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\WindowsMessageMap.h" />
   </ItemGroup>
