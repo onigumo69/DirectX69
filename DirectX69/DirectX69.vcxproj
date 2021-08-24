@@ -198,7 +198,6 @@
     <ClCompile Include="src\Bindable\VertexShader.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CleanException.cpp" />
-    <ClCompile Include="src\Drawable\AssTest.cpp" />
     <ClCompile Include="src\Drawable\Drawable.cpp" />
     <ClCompile Include="src\Drawable\SolidSphere.cpp" />
     <ClCompile Include="src\DXError\DXError.cpp" />
@@ -276,19 +275,13 @@
     <ClInclude Include="include\CleanWindows.h" />
     <ClInclude Include="include\CleanException.h" />
     <ClInclude Include="include\Color.h" />
-    <ClInclude Include="include\Drawable\AssTest.h" />
     <ClInclude Include="include\Drawable\Drawable.h" />
     <ClInclude Include="include\Drawable\DrawableBase.h" />
     <ClInclude Include="include\Drawable\SolidSphere.h" />
-    <ClInclude Include="include\Drawable\TestObject.h" />
     <ClInclude Include="include\DXError\DXError.h" />
     <ClInclude Include="include\DXGIInfoManager.h" />
     <ClInclude Include="include\GDIPlusManager.h" />
-    <ClInclude Include="include\Geometry\Cone.h" />
-    <ClInclude Include="include\Geometry\Cube.h" />
     <ClInclude Include="include\Geometry\IndexedTriangleList.h" />
-    <ClInclude Include="include\Geometry\Plane.h" />
-    <ClInclude Include="include\Geometry\Prism.h" />
     <ClInclude Include="include\Geometry\Sphere.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\ImGuiManager.h" />

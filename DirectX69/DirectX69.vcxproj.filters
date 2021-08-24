@@ -117,9 +117,6 @@
     <ClCompile Include="src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Drawable\AssTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -203,22 +200,10 @@
     <ClInclude Include="include\Drawable\DrawableBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Geometry\Cone.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\CleanMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Geometry\IndexedTriangleList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Geometry\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Geometry\Plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Geometry\Prism.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Geometry\Sphere.h">
@@ -270,12 +255,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Drawable\SolidSphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Drawable\TestObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Drawable\AssTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\assimp\compiler\poppack1.h">

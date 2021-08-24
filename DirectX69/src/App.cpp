@@ -1,5 +1,4 @@
 #include "App.h"
-#include "Drawable/AssTest.h"
 #include "Surface.h"
 #include "GDIPlusManager.h"
 #include "CleanMath.h"
@@ -14,10 +13,10 @@ GDIPlusManager gdipm;
 
 App::App()
 	:
-	wnd{ 800, 600, "DirectX 69" },
+	wnd{ 1280, 720, "DirectX 69" },
 	light{ wnd.GetGraphics() }
 {
-	wnd.GetGraphics().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	wnd.GetGraphics().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 9.0f / 16.0f, 0.5f, 40.0f));
 }
 
 App::~App()
@@ -46,37 +45,24 @@ void App::DoFrame()
 	wnd.GetGraphics().SetCamera(camera.GetMatrix());
 	light.Bind(wnd.GetGraphics(), camera.GetMatrix());
 
-	const auto transform =
-		dx::XMMatrixRotationRollPitchYaw(pos.roll, pos.pitch, pos.yaw) *
-		dx::XMMatrixTranslation(pos.x, pos.y, pos.z);
-
-	nano.Draw(wnd.GetGraphics(), transform);
+	nano.Draw(wnd.GetGraphics());
 	light.Draw(wnd.GetGraphics());
 
 	// imgui windows
 	camera.SpawnControlWindow();
 	light.SpawnControlWindow();
-	ShowModelWindow();
+	ShowImGuiDemoWindow();
+	nano.ShowWindow();
 
 	// present
 	wnd.GetGraphics().EndFrame();
 }
 
-void App::ShowModelWindow()
+void App::ShowImGuiDemoWindow()
 {
-	if (ImGui::Begin("Model"))
+	static bool show_demo_window = true;
+	if (show_demo_window)
 	{
-		using namespace std::string_literals;
-
-		ImGui::Text("Orientation");
-		ImGui::SliderAngle("Roll", &pos.roll, -180.0f, 180.0f);
-		ImGui::SliderAngle("Pitch", &pos.pitch, -180.0f, 180.0f);
-		ImGui::SliderAngle("Yaw", &pos.yaw, -180.0f, 180.0f);
-
-		ImGui::Text("Position");
-		ImGui::SliderFloat("X", &pos.x, -20.0f, 20.0f);
-		ImGui::SliderFloat("Y", &pos.y, -20.0f, 20.0f);
-		ImGui::SliderFloat("Z", &pos.z, -20.0f, 20.0f);
+		ImGui::ShowDemoWindow(&show_demo_window);
 	}
-	ImGui::End();
 }

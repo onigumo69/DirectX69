@@ -12,6 +12,6 @@ namespace Bind
 	protected:
 		static ID3D11DeviceContext* GetContext(Graphics& gfx) noexcept;
 		static ID3D11Device* GetDevice(Graphics& gfx) noexcept;
-		static DXGIInfoManager& GetInfoManager(Graphics& gfx) noxnd;
+		static DXGIInfoManager& GetInfoManager(Graphics& gfx);
 	};
 }
