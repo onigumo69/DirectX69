@@ -17,7 +17,6 @@ App::App()
 	light{ wnd.GetGraphics() }
 {
 	wnd.GetGraphics().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 9.0f / 16.0f, 0.5f, 40.0f));
-	wnd.DisableCursor();
 }
 
 App::~App()
@@ -49,11 +48,29 @@ void App::DoFrame()
 	nano.Draw(wnd.GetGraphics());
 	light.Draw(wnd.GetGraphics());
 
+	while (const auto e = wnd.kbd.ReadKey())
+	{
+		if (e->IsPress() && e->GetCode() == VK_INSERT)
+		{
+			if (wnd.CursorEnabled())
+			{
+				wnd.DisableCursor();
+				wnd.mouse.EnableRaw();
+			}
+			else
+			{
+				wnd.EnableCursor();
+				wnd.mouse.DisableRaw();
+			}
+		}
+	}
+
 	// imgui windows
 	camera.SpawnControlWindow();
 	light.SpawnControlWindow();
 	ShowImGuiDemoWindow();
 	nano.ShowWindow();
+	ShowRawInputWindow();
 
 	// present
 	wnd.GetGraphics().EndFrame();
@@ -66,4 +83,19 @@ void App::ShowImGuiDemoWindow()
 	{
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
+}
+
+void App::ShowRawInputWindow()
+{
+	while (const auto d = wnd.mouse.ReadRawDelta())
+	{
+		x += d->x;
+		y += d->y;
+	}
+	if (ImGui::Begin("Raw Input"))
+	{
+		ImGui::Text("Tally: (%d,%d)", x, y);
+		ImGui::Text("Cursor: %s", wnd.CursorEnabled() ? "enabled" : "disabled");
+	}
+	ImGui::End();
 }

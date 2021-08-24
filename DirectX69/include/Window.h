@@ -32,6 +32,7 @@ public:
 	Window& operator=(const Window&) = delete;
 	void EnableCursor() noexcept;
 	void DisableCursor() noexcept;
+	bool CursorEnabled() const noexcept;
 	static std::optional<int> ProcessMessages() noexcept;
 	Graphics& GetGraphics() const;
 
@@ -49,11 +50,12 @@ public:
 	Keyboard kbd;
 	Mouse mouse;
 private:
-	bool cursorEnabled = false;
+	bool cursorEnabled = true;
 	int width = 1280;
 	int height = 720;
 	HWND hWnd;
 	std::unique_ptr<Graphics> pGfx;
+	std::vector<BYTE> rawBuffer;
 
 public:
 	class Exception : public CleanException
