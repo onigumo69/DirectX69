@@ -1,3 +1,4 @@
+#include "Bindable/VertexBuffer.h"
 #include "App.h"
 #include "Surface.h"
 #include "GDIPlusManager.h"
@@ -46,6 +47,7 @@ void App::DoFrame()
 	light.Bind(wnd.GetGraphics(), camera.GetMatrix());
 
 	nano.Draw(wnd.GetGraphics());
+	nano2.Draw(wnd.GetGraphics());
 	light.Draw(wnd.GetGraphics());
 
 	while (const auto e = wnd.kbd.ReadKey())
@@ -114,7 +116,8 @@ void App::DoFrame()
 	camera.SpawnControlWindow();
 	light.SpawnControlWindow();
 	ShowImGuiDemoWindow();
-	nano.ShowWindow();
+	nano.ShowWindow("Model 1");
+	nano2.ShowWindow("Model 2");
 
 	// present
 	wnd.GetGraphics().EndFrame();

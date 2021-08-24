@@ -28,4 +28,5 @@ private:
 	PointLight light;
 	float speedFactor = 1.0f;
 	Model nano{ wnd.GetGraphics(),"models\\nano_textured\\nanosuit.obj" };
+	Model nano2{ wnd.GetGraphics(),"models\\nano_textured\\nanosuit.obj" };
 };

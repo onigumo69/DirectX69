@@ -1,6 +1,6 @@
 #pragma once
 #include "Bindable/All.h"
-#include "Drawable/DrawableBase.h"
+#include "Drawable/Drawable.h"
 #include "Macros/ConditionalNoexcept.h"
 #include "Vertex.h"
 #include <assimp/Importer.hpp>
@@ -8,10 +8,10 @@
 #include <assimp/postprocess.h>
 #include <optional>
 
-class Mesh : public DrawableBase<Mesh>
+class Mesh : public Drawable
 {
 public:
-	Mesh(Graphics& gfx, std::vector<std::unique_ptr<Bind::Bindable>> bindPtrs);
+	Mesh(Graphics& gfx, std::vector<std::shared_ptr<Bind::Bindable>> bindPtrs);
 	void Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const noxnd;
 	DirectX::XMMATRIX GetTransformXM() const noexcept override;
 private:

@@ -197,9 +197,6 @@
     <ClInclude Include="include\Bindable\TransformCBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Drawable\DrawableBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\CleanMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -387,6 +384,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bindable\BindableCodex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
