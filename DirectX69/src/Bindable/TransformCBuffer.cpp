@@ -1,14 +1,17 @@
 #include "Bindable/TransformCBuffer.h"
 
-TransformCBuffer::TransformCBuffer(Graphics& gfx, const Drawable& parent, UINT slot)
-	:
-	parent{ parent }
+namespace Bind
 {
-	if (!pVCBuffer)
+	TransformCBuffer::TransformCBuffer(Graphics& gfx, const Drawable& parent, UINT slot)
+		:
+		parent{ parent }
 	{
-		pVCBuffer = std::make_unique<VertexConstantBuffer<Transform>>(gfx, slot);
+		if (!pVCBuffer)
+		{
+			pVCBuffer = std::make_unique<VertexConstantBuffer<Transform>>(gfx, slot);
+		}
 	}
-}
+
 
 void TransformCBuffer::Bind(Graphics& gfx) noexcept
 {
@@ -18,11 +21,13 @@ void TransformCBuffer::Bind(Graphics& gfx) noexcept
 		DirectX::XMMatrixTranspose(modelView),
 		DirectX::XMMatrixTranspose(
 			modelView *
-			gfx.GetProjection())
+			gfx.GetProjection()
+		)
 	};
-
 	pVCBuffer->Update(gfx, tf);
 	pVCBuffer->Bind(gfx);
 }
 
 std::unique_ptr<VertexConstantBuffer<TransformCBuffer::Transform>> TransformCBuffer::pVCBuffer;
+
+}

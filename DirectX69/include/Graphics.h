@@ -1,6 +1,7 @@
 #pragma once
 #include "CleanWindows.h"
 #include "CleanException.h"
+#include "Macros/ConditionalNoexcept.h"
 #include <d3d11.h>
 #include <wrl.h>
 #include <vector>
@@ -10,9 +11,14 @@
 #include <memory>
 #include <random>
 
+namespace Bind
+{
+	class Bindable;
+}
+
 class Graphics
 {
-	friend class Bindable;
+	friend Bind::Bindable;
 public:
 	Graphics(HWND hWnd);
 	Graphics(const Graphics&) = delete;
@@ -20,7 +26,7 @@ public:
 	~Graphics();
 	void EndFrame();
 	void BeginFrame(float red, float green, float blue) noexcept;
-	void DrawIndexed(UINT count) noexcept(!IS_DEBUG);
+	void DrawIndexed(UINT count) noxnd;
 	void SetProjection(DirectX::FXMMATRIX proj) noexcept;
 	DirectX::XMMATRIX GetProjection() const noexcept;
 	void SetCamera(DirectX::FXMMATRIX cam) noexcept;
