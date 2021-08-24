@@ -27,5 +27,5 @@ private:
 	Camera camera;
 	PointLight light;
 	float speedFactor = 1.0f;
-	Model nano{ wnd.GetGraphics(), "Models\\nano_hierarchy.gltf" };
+	Model nano{ wnd.GetGraphics(),"models\\nano_textured\\nanosuit.obj" };
 };

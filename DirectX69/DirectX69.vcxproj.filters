@@ -427,5 +427,6 @@
     <FxCompile Include="shader\PhongPS.hlsl" />
     <FxCompile Include="shader\SolidVS.hlsl" />
     <FxCompile Include="shader\SolidPS.hlsl" />
+    <FxCompile Include="shader\PhongSpecularPS.hlsl" />
   </ItemGroup>
 </Project>
